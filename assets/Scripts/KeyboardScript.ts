@@ -50,7 +50,4 @@ export class KeyboardScript extends Component {
         break;
     }
   }
-  onHit() {
-    console.log("Space hit");
-  }
 }
