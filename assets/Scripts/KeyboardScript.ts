@@ -1,5 +1,7 @@
 import {
   _decorator,
+  animation,
+  Animation,
   Component,
   EventKeyboard,
   Input,
@@ -19,11 +21,14 @@ export class KeyboardScript extends Component {
   start() {}
 
   update(deltaTime: number) {
-    if (this.isWaliking)
+    if (this.isWaliking) {
+      this.getComponent(Animation).crossFade("walking");
       this.node.setPosition(
         (this.node.getPosition().x += 100 * deltaTime),
         this.node.position.y,
       );
+    } else {
+    }
   }
 
   onKeyDown(event: EventKeyboard) {
@@ -31,14 +36,21 @@ export class KeyboardScript extends Component {
       case KeyCode.ARROW_RIGHT:
         this.isWaliking = true;
         break;
+      case KeyCode.SPACE:
+        this.getComponent(Animation).crossFade("attack");
+        break;
     }
   }
 
   onKeyUp(event: EventKeyboard) {
     switch (event.keyCode) {
       case KeyCode.ARROW_RIGHT:
+        this.getComponent(Animation).stop();
         this.isWaliking = false;
         break;
     }
+  }
+  onHit() {
+    console.log("Space hit");
   }
 }
